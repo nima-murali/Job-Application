@@ -11,7 +11,6 @@
 class Wpcustomjobs{
 	public function __construct(){
 		add_action('init',array($this, 'wp_jobs_post_types'));
-		#add_action('admin_menu', array($this, 'wp_add_submenu'));
 		add_action('admin_menu',array($this, 'wp_register_submenu_settings'));
 	}
 
@@ -19,7 +18,7 @@ class Wpcustomjobs{
 		register_post_type('jobs',array(
 			'public' => true,
 			'labels' => array(
-				'name' => 'Jobs',
+				'name' => 'Job Listing',
 				'add_new_item' => 'Add New Job',
 				'edit_item' => 'Edit Job',
 				'all_items' => 'All Jobs',
@@ -37,7 +36,7 @@ class Wpcustomjobs{
 
 	public function wp_submenu_settings_callback() {
 		echo 'Hii';
-	}
+	}	
 
 }
 
