@@ -2,6 +2,8 @@
 class Wpsubmenu{
 	public function __construct(){
 		add_action('admin_menu',array($this, 'wp_register_submenu_settings'));
+		add_action( 'admin_init', array( $this, 'setup_sections' ) );
+		add_action( 'admin_init', array( $this, 'setup_fields' ) );
 	}
 
 	public function wp_register_submenu_settings() {
@@ -20,6 +22,20 @@ class Wpsubmenu{
         	</form>
     	</div> <?php
 	}
+	public function setup_sections() {
+		add_settings_section( 'general_setting_section', 'General Settings', array( $this, 'general_setting_callback' ), 'job-settings' );
+	}
+	public function general_setting_callback( $arguments ) {
+		echo '';
+	}
+	public function setup_fields() {
+		add_settings_field( 'email_field', 'Email', array( $this, 'email_field_callback' ), 'job-settings', 'general_setting_section' );
+	}
+	public function email_field_callback( $arguments ) {
+		echo '<input name="email_field" id="email_field" type="text" value="' . get_option( 'email_field' ) . '" />';
+	}
+
+
 }	
 
 
