@@ -39,8 +39,7 @@ class Wpcustomjobs{
             	$query->the_post() ;
                       
         		$result .= '<div class="job-item">';
-        		$result .= '<div class="job-name">' . get_the_title() . '</div>';
-        		$result .= '<div class="job-desc">' . get_the_content() . '</div>'; 
+        		$result .= '<div class="job-name" >' . get_the_title() . '</div>';
         		$result .= '</div>';
   
         	endwhile;

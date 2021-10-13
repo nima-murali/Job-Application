@@ -32,7 +32,7 @@ class Wpsubmenu{
         	'job-settings'
     	);
 
-		// Registe input field
+		// Register input field
 		register_setting(
         	'job-settings',
         	'general_settings_input_field',
@@ -46,13 +46,13 @@ class Wpsubmenu{
 		// Add text fields
         add_settings_field(
         	'general_settings_input_field',
-        	'Input Field',
+        	'Company Email',
         	array( $this, 'general_settings_input_field_callback'),
         	'job-settings',
         	'general_settings_section'
     	);
 
-        // Registe textarea field
+        // Register textarea field
     	register_setting(
         	'job-settings',
         	'general_settings_textarea_field',
@@ -72,7 +72,27 @@ class Wpsubmenu{
         	'general_settings_section'
     	);
 
-     	// Registe select field
+     	// Register checkbox field
+    	register_setting(
+        	'job-settings',
+        	'general_settings_checkbox_field',
+        	array(
+            	'type' => 'string',
+            	'sanitize_callback' => 'sanitize_text_field',
+            	'default' => ''
+        	)
+    	);
+
+    	// Add checkbox fields
+     	add_settings_field(
+        	'general_settings_checkbox_field',
+        	'Display the above content ?',
+        	array( $this, 'general_settings_checkbox_field_callback'),
+        	'job-settings',
+        	'general_settings_section'
+    	);
+
+     	// Register select field
     	register_setting(
         	'job-settings',
         	'general_settings_select_field',
@@ -116,24 +136,29 @@ class Wpsubmenu{
 	public function general_settings_input_field_callback(){
 		$get_input_field = get_option('general_settings_input_field');
 		?>
-    	<input type="text" name="general_settings_input_field" class="regular-text" value="<?php echo isset($get_input_field) ? esc_attr( $get_input_field ) : ''; ?>" />
+    	<input type="email" name="general_settings_input_field" class="regular-text" value="<?php echo isset($get_input_field) ? esc_attr( $get_input_field ) : ''; ?>" />
     	<?php 
 	}
 	
 
 	public function general_settings_textarea_field_callback() {
     	$get_textarea_field = get_option('general_settings_textarea_field');
-    	$get_checkbox_field = get_option('display');
     	?>
     	<textarea name="general_settings_textarea_field" class="large-text" rows="5"><?php echo isset($get_textarea_field) ? esc_textarea( $get_textarea_field ) : ''; ?></textarea>
     	<?php
-    	if($get_checkbox_field == 'True'){ ?>
-			<input type="checkbox" id="display" name="display" value="True" checked>Display Content</input>
+	}
+
+	public function general_settings_checkbox_field_callback(){
+		$get_checkbox_field = get_option('general_settings_checkbox_field');
+		if($get_checkbox_field == 'True'){
+		?>
+			<input type="checkbox" name="general_settings_checkbox_field" value="True" checked>Display Content</input>
 		<?php
 		}
-		else{ ?>
-			<input type="checkbox" id="display" name="display" value="True">Display Content</input>
-		<?php
+		else{
+			?>
+			<input type="checkbox" name="general_settings_checkbox_field" value="True">Display Content</input>
+			<?php
 		}
 	}
 
