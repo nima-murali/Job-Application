@@ -64,8 +64,9 @@ class Wpcustommetaboxes{
 
 	public function wp_location_get($content){
     	$id = get_the_ID();								// taking postid
-		$get_location = get_post_meta( $id, 'location-input', true );
 		if(!empty($get_location)){
+			$get_location .='<br>';
+			$get_location = get_post_meta( $id, 'location-input', true );
 			return $content."Locations :  ".$get_location;
 		}
 		else{
@@ -80,6 +81,7 @@ class Wpcustommetaboxes{
 			return $content;
 		}
 		else{
+			$get_qualification .='<br>';
 			return "Qualification : ".$get_qualification.$content;
 		}
 		

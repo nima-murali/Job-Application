@@ -197,9 +197,12 @@ class Wpsubmenu{
 	public function wp_email_get($content){
 		$post_type = get_post_type();
 		if($post_type == 'jobs'){
-			$get_input_field = get_option('general_settings_input_field');
+			$get_input_field .="Company Email : ";
+			$get_input_field .= get_option('general_settings_input_field');
+			$get_input_field .='<br><br>';
+			$get_input_field .="Job Description :";
 			if (isset($get_input_field)){
-				return "Company email : ".$get_input_field.$content;
+				return $get_input_field.$content;
 			}
 			else{
 				return $content;
@@ -227,8 +230,10 @@ class Wpsubmenu{
 		$post_type = get_post_type();
 		if($post_type == 'jobs'){
 			$checkbox_field_value = get_option('general_settings_checkbox_field');
-			$textarea_field_value = get_option('general_settings_textarea_field');
 			if($checkbox_field_value == 'True'){
+				$textarea_field_value .="About the Company :<br>";
+				$textarea_field_value .= get_option('general_settings_textarea_field');
+				$textarea_field_value .='<br><br>';
 				return $content.$textarea_field_value;
 			}
 			else{
