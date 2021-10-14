@@ -1,8 +1,5 @@
 <?php 
 
-require_once('settings.php');
-
-
 class Wpcustommetaboxes{
 	public function __construct(){
 		add_action( 'add_meta_boxes',array($this, 'wp_add_location'));
@@ -29,37 +26,23 @@ class Wpcustommetaboxes{
 
 
 	public function wp_location_save( $post_id ){
-		$inputs = [
-        'location-input',
-    	];
-    	foreach ( $inputs as $input ) {
-    		if (! isset( $_POST['location_name_nonce_field'] )|| ! wp_verify_nonce( $_POST['location_name_nonce_field'], 'save_location_name' ))
-    		{
-   				wp_nonce_ays( '' );
-			} 
-			else{
-        			update_post_meta( $post_id, $input,sanitize_text_field( $_POST[$input] ));
-			}			
-    		
-    	}
+    	if (! isset( $_POST['location_name_nonce_field'] )|| ! wp_verify_nonce( $_POST['location_name_nonce_field'], 'save_location_name' ))
+    	{
+   			return $post_id;
+		} 
+		if ($_POST['location-input']){
+        	update_post_meta( $post_id, 'location-input',sanitize_text_field( $_POST['location-input'] ));
+		}			
 	}
 
 	public function wp_qualification_save( $post_id ){
-		$inputs = [
-        'qualification',
-    	];
-    	foreach ( $inputs as $input ) {
-    		if (! isset( $_POST['qualification_nonce_field'] )|| ! wp_verify_nonce( $_POST['qualification_nonce_field'], 'save_qualification' ))
-    		{
-   				wp_nonce_ays( '' );
-			} 
-			else{
-        		if(isset($_POST['qualification'])){
-            		update_post_meta( $post_id, $input,$_POST[$input]);
-        		}
-			}			
-    		
-    	}
+    	if (! isset( $_POST['qualification_nonce_field'] )|| ! wp_verify_nonce( $_POST['qualification_nonce_field'], 'save_qualification' ))
+    	{
+   			return $post_id;
+		} 
+        if(isset($_POST['qualification'])){
+            update_post_meta( $post_id, 'qualification',sanitize_text_field( $_POST['qualification']));
+        }
 	}
 
 	public function wp_location_get($content){
