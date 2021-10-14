@@ -18,7 +18,7 @@ class Wpcustommetaboxes{
 		add_meta_box( 'location-id', 'Add location',array($this, 'wp_add_location_form'), 'jobs', 'side', 'high');																							
 	}
 	public function wp_add_qualification(){
-		add_meta_box( 'qualification-id', 'Add Qualification',array($this, 'wp_add_qualification_form'), 'jobs', 'side', 'high');																							
+		add_meta_box( 'qualification-id', 'Add Qualification',array($this, 'wp_add_qualification_form'),'jobs', 'side', 'high');																							
 	}
 	public function wp_add_location_form($post){
 		include plugin_dir_path(__FILE__).'location_form.php';		
@@ -76,7 +76,7 @@ class Wpcustommetaboxes{
 	public function wp_qualification_get($content){
     	$id = get_the_ID();								// taking postid
 		$get_qualification = get_post_meta( $id, 'qualification', true );
-		if($get_qualification == '--select--'){
+		if($get_qualification == '--select--' || empty($get_qualification)){
 			return $content;
 		}
 		else{

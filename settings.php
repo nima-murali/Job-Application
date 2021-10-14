@@ -228,7 +228,7 @@ class Wpsubmenu{
 		if($post_type == 'jobs'){
 			$checkbox_field_value = get_option('general_settings_checkbox_field');
 			$textarea_field_value = get_option('general_settings_textarea_field');
-			if($checkbox_field_value == 'yes'){
+			if($checkbox_field_value == 'True'){
 				return $content.$textarea_field_value;
 			}
 			else{

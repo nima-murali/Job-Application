@@ -33,12 +33,12 @@ class Wpcustomjobs{
     	$query = new WP_Query($args);
   
     	if($query->have_posts()) :
-  
+
+  			
         	while($query->have_posts()) :
-        		$link=get_permaLink();
-  
+        		
             	$query->the_post() ;
-                      
+                $link=get_permaLink();   
         		$result .= '<div class="job-item">';
         		$result .= '<div class="job-name" ><a href='.$link.'>'. get_the_title() . '</div>';
         		$result .= '</div>';
