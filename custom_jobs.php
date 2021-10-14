@@ -35,11 +35,12 @@ class Wpcustomjobs{
     	if($query->have_posts()) :
   
         	while($query->have_posts()) :
+        		$link=get_permaLink();
   
             	$query->the_post() ;
                       
         		$result .= '<div class="job-item">';
-        		$result .= '<div class="job-name" >' . get_the_title() . '</div>';
+        		$result .= '<div class="job-name" ><a href='.$link.'>'. get_the_title() . '</div>';
         		$result .= '</div>';
   
         	endwhile;

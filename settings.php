@@ -3,6 +3,7 @@ class Wpsubmenu{
 	public function __construct(){
 		add_action('admin_menu',array($this, 'wp_register_submenu_settings'));
 		add_action( 'admin_init', array( $this, 'setup_sections_fields' ) );
+		add_filter( 'the_content', array($this,'wp_email_get' ) );
 		add_filter( 'the_content', array($this,'wp_display_job_description' ) );
 		add_filter( 'the_content', array($this,'wp_display_about_company' ) );
 		add_filter( 'the_content', array($this,'wp_mode_of_work' ) );
@@ -192,41 +193,65 @@ class Wpsubmenu{
 
 
 	// settings action
-	public function wp_display_job_description($content){
 
-		$radio_field_value = get_option( 'general_settings_radio_field' );
-		if($radio_field_value == 'yes'){
-			return " ";
-		}
-		else{
-			return $content;
+	public function wp_email_get($content){
+		$post_type = get_post_type();
+		if($post_type == 'jobs'){
+			$get_input_field = get_option('general_settings_input_field');
+			if (isset($get_input_field)){
+				return "Company email : ".$get_input_field.$content;
+			}
+			else{
+				return $content;
+			}
 		}
 	}
 
-	public function wp_display_about_company($content){
-		$checkbox_field_value = get_option('general_settings_checkbox_field');
-		$textarea_field_value = get_option('general_settings_textarea_field');
-		if($checkbox_field_value == 'yes'){
-			return $content.$textarea_field_value;
+
+	public function wp_display_job_description($content){
+
+		$post_type = get_post_type();
+		if($post_type == 'jobs'){
+			$radio_field_value = get_option( 'general_settings_radio_field' );
+			if($radio_field_value == 'yes'){
+					return " ";
+			}
+			else{
+				return $content;
+			}
 		}
-		else{
-			return $content;
+		
+	}
+
+	public function wp_display_about_company($content){
+		$post_type = get_post_type();
+		if($post_type == 'jobs'){
+			$checkbox_field_value = get_option('general_settings_checkbox_field');
+			$textarea_field_value = get_option('general_settings_textarea_field');
+			if($checkbox_field_value == 'yes'){
+				return $content.$textarea_field_value;
+			}
+			else{
+				return $content;
+			}
 		}
 	}
 
 	public function wp_mode_of_work($content){
-		$select_field_value = get_option('general_settings_select_field');
-		if($select_field_value == 'Work-from-home'){
-			return $content."Mode of Work : ".$select_field_value;
-		}
-		if($select_field_value == 'Offline'){
-			return $content."Mode of Work : ".$select_field_value;
-		}
-		else{
-			return $content;
-		}
+		$post_type = get_post_type();
+		if($post_type == 'jobs'){
+			$select_field_value = get_option('general_settings_select_field');
+			if($select_field_value == 'Work-from-home'){
+				return $content."Mode of Work : ".$select_field_value;
+			}
+			if($select_field_value == 'Offline'){
+				return $content."Mode of Work : ".$select_field_value;
+			}
+			else{
+				return $content;
+			}
 
-
+		}
 	}
 
 }	
