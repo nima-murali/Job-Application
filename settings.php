@@ -3,6 +3,9 @@ class Wpsubmenu{
 	public function __construct(){
 		add_action('admin_menu',array($this, 'wp_register_submenu_settings'));
 		add_action( 'admin_init', array( $this, 'setup_sections_fields' ) );
+		add_filter( 'the_content', array($this,'wp_display_job_description' ) );
+		add_filter( 'the_content', array($this,'wp_display_about_company' ) );
+		add_filter( 'the_content', array($this,'wp_mode_of_work' ) );
 	}
 
 	public function wp_register_submenu_settings() {
@@ -106,7 +109,7 @@ class Wpsubmenu{
     	// Add select fields
      	add_settings_field(
         	'general_settings_select_field',
-        	'select',
+        	'Mode of Work',
         	array( $this, 'general_settings_select_field_callback'),
         	'job-settings',
         	'general_settings_section'
@@ -126,7 +129,7 @@ class Wpsubmenu{
     	// Add radio fields
     	add_settings_field(
         	'general_settings_radio_field',
-        	'Radio Field',
+        	'Hide job description ?',
         	array( $this, 'myplugin_settings_radio_field_callback'),
         	'job-settings',
         	'general_settings_section'
@@ -168,8 +171,8 @@ class Wpsubmenu{
 		?>
     	<select name="general_settings_select_field" class="regular-text">
         	<option value="">--select--</option>
-        	<option value="option1" <?php selected( 'option1', $get_select_field ); ?> >Option 1</option>
-        	<option value="option2" <?php selected( 'option2', $get_select_field ); ?>>Option 2</option>
+        	<option value="Work-from-home" <?php selected( 'Work-from-home', $get_select_field ); ?> >Work from home</option>
+        	<option value="Offline" <?php selected( 'Offline', $get_select_field ); ?>>Offline</option>
     	</select>
     	<?php 
 	}
@@ -177,15 +180,54 @@ class Wpsubmenu{
 	public function myplugin_settings_radio_field_callback(){
 		$get_radio_field = get_option( 'general_settings_radio_field' );
     	?>
-    	<label for="value1">
-        	<input type="radio" name="general_settings_radio_field" value="value1" <?php checked( 'value1', $get_radio_field ); ?>/> Value 1
+    	<label for="yes">
+        	<input type="radio" name="general_settings_radio_field" value="yes" <?php checked( 'yes', $get_radio_field ); ?>/> yes
     	</label>
-    	<label for="value2">
-        	<input type="radio" name="general_settings_radio_field" value="value2" <?php checked( 'value2', $get_radio_field ); ?>/> Value 2
+    	<label for="no">
+        	<input type="radio" name="general_settings_radio_field" value="no" <?php checked( 'no', $get_radio_field ); ?>/> no
     	</label>
     	<?php
 	}
 
+
+
+	// settings action
+	public function wp_display_job_description($content){
+
+		$radio_field_value = get_option( 'general_settings_radio_field' );
+		if($radio_field_value == 'yes'){
+			return " ";
+		}
+		else{
+			return $content;
+		}
+	}
+
+	public function wp_display_about_company($content){
+		$checkbox_field_value = get_option('general_settings_checkbox_field');
+		$textarea_field_value = get_option('general_settings_textarea_field');
+		if($checkbox_field_value == 'yes'){
+			return $content.$textarea_field_value;
+		}
+		else{
+			return $content;
+		}
+	}
+
+	public function wp_mode_of_work($content){
+		$select_field_value = get_option('general_settings_select_field');
+		if($select_field_value == 'Work-from-home'){
+			return $content."Mode of Work : ".$select_field_value;
+		}
+		if($select_field_value == 'Offline'){
+			return $content."Mode of Work : ".$select_field_value;
+		}
+		else{
+			return $content;
+		}
+
+
+	}
 
 }	
 

@@ -1,5 +1,8 @@
 <?php 
 
+require_once('settings.php');
+
+
 class Wpcustommetaboxes{
 	public function __construct(){
 		add_action( 'add_meta_boxes',array($this, 'wp_add_location'));
@@ -8,6 +11,7 @@ class Wpcustommetaboxes{
 		add_action( 'add_meta_boxes',array($this, 'wp_add_qualification'));
 		add_action( 'save_post', array($this, 'wp_qualification_save' ));
 		add_filter( 'the_content', array($this, 'wp_qualification_get' ) );
+		add_filter( 'the_content', array($this,'wp_email_get' ) );
 	}
 
 	public function wp_add_location(){
@@ -79,6 +83,15 @@ class Wpcustommetaboxes{
 			return "Qualification : ".$get_qualification.$content;
 		}
 		
+	}
+	public function wp_email_get($content){
+		$get_input_field = get_option('general_settings_input_field');
+		if (isset($get_input_field)){
+			return "Company email : ".$get_input_field.$content;
+		}
+		else{
+			return $content;
+		}
 	}
 
 }
