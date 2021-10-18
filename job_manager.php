@@ -9,6 +9,9 @@
 require_once('settings.php');
 require_once('meta_boxes.php');
 require_once('custom_jobs.php');
+require_once('job_application.php')
+
+
 
 
 ?>

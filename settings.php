@@ -7,6 +7,7 @@ class Wpsubmenu{
 		add_filter( 'the_content', array($this,'wp_display_job_description' ) );
 		add_filter( 'the_content', array($this,'wp_display_about_company' ) );
 		add_filter( 'the_content', array($this,'wp_mode_of_work' ) );
+		add_filter( 'the_content', array($this,'wp_aaply_for_job' ) );
 	}
 
 	public function wp_register_submenu_settings() {
@@ -247,7 +248,7 @@ class Wpsubmenu{
 		if($post_type == 'jobs'){
 			$select_field_value = get_option('general_settings_select_field');
 			if($select_field_value == 'Work-from-home'){
-				return $content."Mode of Work : ".$select_field_value;
+				return $content."Mode of Work : ".$select_field_value.$form;
 			}
 			if($select_field_value == 'Offline'){
 				return $content."Mode of Work : ".$select_field_value;
@@ -257,6 +258,32 @@ class Wpsubmenu{
 			}
 
 		}
+	}
+
+	public function wp_aaply_for_job($content){
+		global $job_id;
+		$job_id = $post-> ID;
+		$job_post_title = get_the_title($job_id);
+
+		$display_button .= '<br><br><button onclick="display_form()">Apply for this position</button><br><br>
+					<form id="application_form" action="" class="ajax" hidden >	
+  						<label>Full Name</label>
+          				<input type="text" name="name" class="name" required><br><br>
+						<label>Email id</label>
+						<input type="email" name="email" class="email" required>
+						<br><br><label>Primary Skills</label>
+						<textarea cols="3" rows="3" name="message" class="message" required></textarea><hr>
+						<input type="text" style="display: none" name="jobname" value="'.$job_post_title.'" required class="jobname">
+						<input type = "submit" class="submitbtn" value="Apply">
+						<div class="success_msg" style="display: none">
+							Thank you for applying. Your Application for '.$job_post_title.' has been sent successfully<br>
+						</div>
+						<div class="error_msg" style="display: none">
+							Something went wrong. Try again.
+						</div>
+					</form>';	
+
+		return $content.$display_button;
 	}
 
 }	
