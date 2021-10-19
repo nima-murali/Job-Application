@@ -1,32 +1,31 @@
 jQuery(document).ready( function($) {
-   $('form.ajax').on('submit', function(e){
+   $('form.register').on('submit', function(e){
       e.preventDefault();
       var that = $(this),
       url = that.attr('action'),
       type = that.attr('method');
-      var name = $('.name').val();
-      var email = $('.email').val();
-      var message = $('.message').val();
-      var jobname = $('.jobname').val();
+      var name = $('.applicant-name').val();
+      var email = $('.applicant-email').val();
+      var skills = $('.primary-skills').val();
+      var jobtitle = $('.vacant-position').val();
       $.ajax({
          url: myAjax.ajaxurl,
          type:"POST",
          dataType:'json',
          data: {
-            action:'set_form',
+            action:'display_applied_jobs',
             name:name,
             email:email,
-            message:message,
-            jobname:jobname,
-       },   success: function(response) {
-            $(".success_msg").css("display","block").append('<div> Name :'+name+'<br> Email :'+email+'<br> Skill Given :'+message+'</div>')
-            
+            skills:skills,
+            jobtitle:jobtitle,
+       },success: function(response) {
+            $(".applied_successfully").css("display","block").append('<div> Name :'+name+'<br> Email :'+email+'<br> Primary Skills:'+skills+'</div>');          
       },
       error: function(data){
-            $(".error_msg").css("display","block");  
+            $(".failed").css("display","block");  
       }
       });
-   $('.ajax')[0].reset();
+      $('.register')[0].reset();
    
    });
    

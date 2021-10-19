@@ -1,23 +1,22 @@
 <?php
-
 require_once('custom_applications.php');
 
 class Wpapplyjob{
   
-	public function __construct(){
-		add_action( 'wp_ajax_set_form',array($this,'set_form'));  
-        add_action( 'wp_ajax_nopriv_set_form',array($this,'set_form')); 
+    public function __construct(){
+        add_action( 'wp_ajax_display_applied_jobs',array($this,'display_applied_jobs'));  
+        add_action( 'wp_ajax_nopriv_display_applied_jobs',array($this,'display_applied_jobs')); 
         add_action( 'init',array($this,'script_enqueue'));
-	}
-    public function set_form(){
+    }
+    public function display_applied_jobs(){
         $name = $_POST['name'];
         $email = $_POST['email'];
-        $message = $_POST['message'];
-        $title = $_POST['jobname'];
+        $skills = $_POST['skills'];
+        $title = $_POST['jobtitle'];
        
         $new_post = array(
             'post_title'    => $name,
-            'post_content'  => "Applicant Full Name : ".$name."<br>Applied For the position of ".$title."<br><br>Email : ".$email."<br>Primary Skills : ". $message,
+            'post_content'  => "Applicant Full Name : ".$name."Applied For the position of ".$title."<br><br>Email : ".$email."<br>Primary Skills : ". $skills,
             'post_status'   => 'publish',           
             'post_type' => 'applicant'  
         );
@@ -44,7 +43,5 @@ class Wpapplyjob{
      }
 }
 
-$objapplyjob	=	new Wpapplyjob();
- 
-
+$objapplyjob    =   new Wpapplyjob();
 ?>

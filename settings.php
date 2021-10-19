@@ -190,11 +190,7 @@ class Wpsubmenu{
     	</label>
     	<?php
 	}
-
-
-
 	// settings action
-
 	public function wp_email_get($content){
 		$post_type = get_post_type();
 		if($post_type == 'jobs'){
@@ -210,8 +206,6 @@ class Wpsubmenu{
 			}
 		}
 	}
-
-
 	public function wp_display_job_description($content){
 
 		$post_type = get_post_type();
@@ -226,7 +220,6 @@ class Wpsubmenu{
 		}
 		
 	}
-
 	public function wp_display_about_company($content){
 		$post_type = get_post_type();
 		if($post_type == 'jobs'){
@@ -242,7 +235,6 @@ class Wpsubmenu{
 			}
 		}
 	}
-
 	public function wp_mode_of_work($content){
 		$post_type = get_post_type();
 		if($post_type == 'jobs'){
@@ -259,36 +251,32 @@ class Wpsubmenu{
 
 		}
 	}
-
 	public function wp_aaply_for_job($content){
 		global $job_id;
 		$job_id = $post-> ID;
 		$job_post_title = get_the_title($job_id);
 
 		$display_button .= '<br><br><button onclick="display_form()">Apply for this position</button><br><br>
-					<form id="application_form" action="" class="ajax" hidden >	
+					<form id="application_form" action="" class="register" hidden >	
   						<label>Full Name</label>
-          				<input type="text" name="name" class="name" required><br><br>
+          				<input type="text" name="name" class="applicant-name" required><br><br>
 						<label>Email id</label>
-						<input type="email" name="email" class="email" required>
+						<input type="email" name="email" class="applicant-email" required>
 						<br><br><label>Primary Skills</label>
-						<textarea cols="3" rows="3" name="message" class="message" required></textarea><hr>
-						<input type="text" style="display: none" name="jobname" value="'.$job_post_title.'" required class="jobname">
-						<input type = "submit" class="submitbtn" value="Apply">
-						<div class="success_msg" style="display: none">
+						<textarea name="skills" class="primary-skills" required></textarea><hr>
+						<input type="text" style="display: none" name="jobtitle" value="'.$job_post_title.'" class="vacant-position">
+						<input type = "submit" value="Apply">
+						<div class="applied_successfully" style="display: none">
 							Thank you for applying. Your Application for '.$job_post_title.' has been sent successfully<br>
 						</div>
-						<div class="error_msg" style="display: none">
+						<div class="failed" style="display: none">
 							Something went wrong. Try again.
 						</div>
 					</form>';	
 
 		return $content.$display_button;
 	}
-
 }	
-
-
 $objsubmenu		= new Wpsubmenu();
 
 ?>

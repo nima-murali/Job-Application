@@ -8,11 +8,9 @@ class Wpcustommetaboxes{
 		add_action( 'add_meta_boxes',array($this, 'wp_add_qualification'));
 		add_action( 'save_post', array($this, 'wp_qualification_save' ));
 		add_filter( 'the_content', array($this, 'wp_qualification_get' ) );
-		
 	}
-
 	public function wp_add_location(){
-		add_meta_box( 'location-id', 'Add location',array($this, 'wp_add_location_form'), 'jobs', 'side', 'high');																							
+		add_meta_box( 'location-id', 'Add location',array($this, 'wp_add_location_form'), 'jobs', 'side', 'high');																					
 	}
 	public function wp_add_qualification(){
 		add_meta_box( 'qualification-id', 'Add Qualification',array($this, 'wp_add_qualification_form'),'jobs', 'side', 'high');																							
