@@ -25,7 +25,7 @@ class Wpcustomapplications{
       'public'                 => true,
       'has_archive'         => true,
     );
-    register_post_type( 'applicant', $args ); 
+    register_post_type( 'appliedjobs', $args ); 
   
   }
 

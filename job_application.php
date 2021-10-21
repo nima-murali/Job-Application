@@ -16,9 +16,9 @@ class Wpapplyjob{
        
         $new_post = array(
             'post_title'    => $name,
-            'post_content'  => "Applicant Full Name : ".$name."Applied For the position of ".$title."<br><br>Email : ".$email."<br>Primary Skills : ". $skills,
+            'post_content'  => "Applicant Full Name : ".$name."     Applied For the position of ".$title."          Email : ".$email."          Primary Skills : ". $skills,
             'post_status'   => 'publish',           
-            'post_type' => 'applicant'  
+            'post_type' => 'appliedjobs'  
         );
         $pid = wp_insert_post($new_post);
       
